@@ -35,6 +35,7 @@
                 android:id="@+id/allmatches"
                 android:layout_margin="10dp"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:background="@color/homeTabs"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -43,6 +44,7 @@
             <TextView
                 android:layout_margin="10dp"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:background="@color/homeTabs"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -58,6 +60,7 @@
                 android:id="@+id/upcomingmatches"
                 android:layout_margin="10dp"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:background="@color/homeTabs"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -66,6 +69,7 @@
             <TextView
                 android:layout_margin="10dp"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:background="@color/homeTabs"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -78,8 +82,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:textColor="#0E9213"
-            android:backgroundTint="#13B41A"
+            android:textColor="@color/colorLists"
             android:layout_centerInParent="true"
             android:layout_width="120dp"
             android:layout_height="120dp"

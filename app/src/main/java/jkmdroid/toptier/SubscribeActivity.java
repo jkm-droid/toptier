@@ -37,7 +37,7 @@ public class SubscribeActivity extends AppCompatActivity implements PurchasesUpd
     BillingClient billingClient;
     AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener;
     RecyclerView recyclerView;
-    TextView txtPremium;
+    TextView txtPremium, no_subscription;
     String email;
 
     @Override
@@ -46,7 +46,6 @@ public class SubscribeActivity extends AppCompatActivity implements PurchasesUpd
         setContentView(R.layout.activity_subscribe);
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(Preferences.Login.NAME, MODE_PRIVATE);
          email = preferences.getString(Preferences.Login.EMAIL, "");
-        System.out.println("-------------------------------"+email);
 
         setupBillingClient();
         init();
@@ -54,6 +53,7 @@ public class SubscribeActivity extends AppCompatActivity implements PurchasesUpd
 
     private void init() {
         txtPremium = findViewById(R.id.txt_premium);
+        no_subscription = findViewById(R.id.txt_no_subscriptions);
         recyclerView = findViewById(R.id.product_recycler);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -112,7 +112,10 @@ public class SubscribeActivity extends AppCompatActivity implements PurchasesUpd
                     ProductAdapter productAdapter = new ProductAdapter(SubscribeActivity.this, list, billingClient);
                     recyclerView.setAdapter(productAdapter);
                 }else{
+                    no_subscription.setVisibility(View.VISIBLE);
+                    no_subscription.setText("No Subscriptions found");
                     Toast.makeText(SubscribeActivity.this, "Error: "+billingResult.getResponseCode(), Toast.LENGTH_SHORT).show();
+
                 }
             });
         }else{
@@ -171,21 +174,26 @@ public class SubscribeActivity extends AppCompatActivity implements PurchasesUpd
             e.printStackTrace();
         }
         final String data = d;
-        final String link = "https://golpredicts.mblog.co.ke/subscription_details.php";
+        final String link = "https://toptier.mblog.co.ke/subscriptions.php";
 
         @SuppressLint("HandlerLeak")Handler handler = new Handler(){
             @Override
             public void handleMessage(@NonNull Message msg) {
                 super.handleMessage(msg);
+                String responses = "you are already subscribed";
                 if (msg.arg1 == 200){
-                    if (((String)msg.obj).equalsIgnoreCase("saved successfully")){
+                    if (((String)msg.obj).equalsIgnoreCase("subscription saved successfully")){
                         Toast.makeText(SubscribeActivity.this, "SUBSCRIBED SUCCESSFULLY", Toast.LENGTH_SHORT).show();
 
-                    } else if(((String)msg.obj).equalsIgnoreCase("subscribed:no email found")) {
-                        Toast.makeText(SubscribeActivity.this, "SUBSCRIBED:BUT EMAIL DOES NOT MATCH", Toast.LENGTH_SHORT).show();
+                    } else if(((String)msg.obj).equalsIgnoreCase("subscription not saved/")) {
+                        Toast.makeText(SubscribeActivity.this, "SUBSCRIPTION FAILED", Toast.LENGTH_SHORT).show();
 
-                    } else{
-                        Toast.makeText(SubscribeActivity.this, "AN ERROR OCCURRED", Toast.LENGTH_SHORT).show();
+                    } else if(((String)msg.obj).equalsIgnoreCase("you are already subscribed")) {
+                        txtPremium.setVisibility(View.VISIBLE);
+                        txtPremium.setText("You are already subscribed");
+                        Toast.makeText(SubscribeActivity.this, "YOU ARE ALREADY SUBSCRIBED", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(SubscribeActivity.this, "UNKNOWN ERROR OCCURRED...RETRY", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

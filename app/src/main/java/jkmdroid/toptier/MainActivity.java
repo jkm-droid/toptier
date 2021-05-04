@@ -17,6 +17,7 @@ import android.os.Message;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ShareActionProvider;
@@ -36,6 +37,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.android.volley.BuildConfig;
 import com.google.android.material.navigation.NavigationView;
@@ -49,6 +54,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Administrator on 11/6/2017.
@@ -86,8 +92,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         init();
     }
     void init(){
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setSubtitle("Accurate Odds");
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setSubtitle("Guaranteed Win");
 
         Bundle extras = getIntent().getExtras();
         if (extras != null)
@@ -135,9 +142,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         tabLayout.getTabAt(selectedTab).select();
-
+        notification();
         background();
     }
+
+    private void notification() {
+        //method for sending the messages to online database
+        //perform the work while the device is idle only
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        //perform the work periodically, every 10 minutes e.t.c
+        final PeriodicWorkRequest messagesWorkRequest = new PeriodicWorkRequest
+                .Builder(NotificationWorker.class, 10, TimeUnit.SECONDS)
+//                .setConstraints(constraints)
+//                .setInitialDelay(2, TimeUnit.MINUTES)
+                .build();
+
+
+        //initiate the work using work manager
+        WorkManager workManager = WorkManager.getInstance(getApplicationContext());
+        workManager.enqueue(messagesWorkRequest);
+
+        workManager.getWorkInfoByIdLiveData(messagesWorkRequest.getId()).observe(
+                this, workInfo -> {
+                    if (workInfo != null) {
+                        Log.d("periodicWorkRequest", "Status changed to : " + workInfo.getState());
+                    }
+                }
+        );
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
