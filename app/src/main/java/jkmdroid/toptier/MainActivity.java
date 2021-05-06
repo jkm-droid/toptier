@@ -147,17 +147,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void notification() {
-        //method for sending the messages to online database
-        //perform the work while the device is idle only
-        Constraints constraints = new Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build();
 
         //perform the work periodically, every 10 minutes e.t.c
         final PeriodicWorkRequest messagesWorkRequest = new PeriodicWorkRequest
-                .Builder(NotificationWorker.class, 10, TimeUnit.SECONDS)
-//                .setConstraints(constraints)
-//                .setInitialDelay(2, TimeUnit.MINUTES)
+                .Builder(NotificationWorker.class, 6, TimeUnit.HOURS)
                 .build();
 
 
@@ -209,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    String string = "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
+    String string = "https://play.google.com/store/apps/details?id=jkmdroid.toptier";
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){
@@ -239,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 try {
                     String url = "https://api.whatsapp.com/send?phone="+
-                            URLEncoder.encode("+254774819701", "UTF-8") +"&text=" + URLEncoder.encode("Hello GolPredicts", "UTF-8");
+                            URLEncoder.encode("+254738801655", "UTF-8") +"&text=" + URLEncoder.encode("Hello GolPredicts", "UTF-8");
                     i.setPackage("com.whatsapp");
                     i.setData(Uri.parse(url));
                     if (i.resolveActivity(packageManager) != null) {
@@ -251,9 +244,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.email:
                 Intent email = new Intent(Intent.ACTION_SEND);
-                email.putExtra(Intent.EXTRA_EMAIL, new String[]{ "golpredicts@gmail.com"});
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{ "toptierodds@gmail.com"});
                 email.putExtra(Intent.EXTRA_SUBJECT, "");
-                email.putExtra(Intent.EXTRA_TEXT, "Hello GolPredicts");
+                email.putExtra(Intent.EXTRA_TEXT, "Hello TopTier Odds");
 
                 //need this to prompts email client only
                 email.setType("message/rfc822");
@@ -261,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(Intent.createChooser(email, "Choose an Email client :"));
                 break;
             case R.id.telegram:
-                String url = "http://t.me/golpredicts";
+                String url = "http://t.me/toptierodds";
                 Intent intent1 = new Intent(Intent.ACTION_VIEW);
                 intent1.setData(Uri.parse(url));
                 startActivity(Intent.createChooser(intent1, "Choose browser"));

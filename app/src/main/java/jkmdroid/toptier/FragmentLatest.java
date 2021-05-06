@@ -31,7 +31,6 @@ public class FragmentLatest extends Fragment{
         View view = inflater.inflate(R.layout.activity_latest, null);
         listView = view.findViewById(R.id.listview);
         ((TextView) view.findViewById(R.id.title)).setText("LATEST MATCHES");
-//        System.out.println("In latest fragment");
 
         errorView = view.findViewById(R.id.error);
         if (MyHelper.isOnline(getActivity()))

@@ -83,6 +83,7 @@ public class FragmentAllMatches extends Fragment{
     public ArrayList<Tip> getTips() {
         return tips;
     }
+
     class Adapter extends ArrayAdapter {
         public Adapter(@NonNull Context context, @NonNull List objects){
             super(context, R.layout.all_match, objects);
@@ -104,26 +105,21 @@ public class FragmentAllMatches extends Fragment{
             ImageView imgWinlose = v.findViewById(R.id.winlose);
 
             if (tips.get(position).getVipStatus() == 10){
-                System.out.println("VIP tip is 10");
                 ((TextView) v.findViewById(R.id.vip_status)).setText("VIP");
             }
 
             String winlose = tips.get(position).getWinLose();
+            String s, correct = tips.get(position).getCorrect();
+            s = "Pick: " + correct + " -> ";
+
             if (winlose.equalsIgnoreCase("won")) {
                 imgWinlose.setImageResource(R.drawable.won_status);
-                String s, correct = tips.get(position).getCorrect();
-                s = "Pick: " + correct + " -> ";
+
                 if (correct.equalsIgnoreCase("home")){
                     ((TextView)v.findViewById(R.id.team1)).setTextColor(Color.argb(250,0,165,0));
                     ((TextView)v.findViewById(R.id.homeodds)).setTextColor(Color.argb(250,0,165,0));
                     ((TextView)v.findViewById(R.id.home)).setTextColor(Color.argb(250,0,165,0));
                     s += tips.get(position).getHome();
-
-                }else if (correct.equalsIgnoreCase("away")){
-                    ((TextView)v.findViewById(R.id.team2)).setTextColor(Color.argb(250,0,165,0));
-                    ((TextView)v.findViewById(R.id.awayodds)).setTextColor(Color.argb(250,0,165,0));
-                    ((TextView)v.findViewById(R.id.away)).setTextColor(Color.argb(250,0,165,0));
-                    s += tips.get(position).getAway();
 
                 }else if(correct.equalsIgnoreCase("draw")){
                     ((TextView)v.findViewById(R.id.vs)).setTextColor(Color.argb(250,0,165,0));
@@ -131,32 +127,39 @@ public class FragmentAllMatches extends Fragment{
                     ((TextView)v.findViewById(R.id.draw)).setTextColor(Color.argb(250,0,165,0));
                     s += tips.get(position).getDraw();
 
+                }else if (correct.equalsIgnoreCase("away")){
+                    ((TextView)v.findViewById(R.id.team2)).setTextColor(Color.argb(250,0,165,0));
+                    ((TextView)v.findViewById(R.id.awayodds)).setTextColor(Color.argb(250,0,165,0));
+                    ((TextView)v.findViewById(R.id.away)).setTextColor(Color.argb(250,0,165,0));
+                    s += tips.get(position).getAway();
+
                 }else{
                     s = "Pick -> "+tips.get(position).getCorrect();
                 }
-                ((TextView) v.findViewById(R.id.correct)).setTextColor(Color.argb(250, 0, 165, 0));
+                ((TextView) v.findViewById(R.id.correct)).setTextColor(Color.argb(250,0,165,0));
                 ((TextView) v.findViewById(R.id.correct)).setText(s);
 
             }else if(winlose.equalsIgnoreCase("lost")){
                 imgWinlose.setImageResource(R.drawable.lost_status);
-                String s, correct = tips.get(position).getCorrect();
-                s = "Pick: "+correct+" -> ";
 
-                if (correct.equalsIgnoreCase("home")){
-                    ((TextView)v.findViewById(R.id.team1)).setTextColor(Color.argb(250,219,18,15));
-                    ((TextView)v.findViewById(R.id.homeodds)).setTextColor(Color.argb(250,219,18,15));
-                    ((TextView)v.findViewById(R.id.home)).setTextColor(Color.argb(250,219,18,15));
+                if (correct.equalsIgnoreCase("home")) {
+                    ((TextView) v.findViewById(R.id.team1)).setTextColor(Color.argb(250, 219, 18, 15));
+                    ((TextView) v.findViewById(R.id.homeodds)).setTextColor(Color.argb(250, 219, 18, 15));
+                    ((TextView) v.findViewById(R.id.home)).setTextColor(Color.argb(250, 219, 18, 15));
                     s += tips.get(position).getHome();
-                }else if (correct.equalsIgnoreCase("away")){
-                    ((TextView)v.findViewById(R.id.team2)).setTextColor(Color.argb(250,219,18,15));
-                    ((TextView)v.findViewById(R.id.awayodds)).setTextColor(Color.argb(250,219,18,15));
-                    ((TextView)v.findViewById(R.id.away)).setTextColor(Color.argb(250,219,18,15));
-                    s += tips.get(position).getAway();
+
                 }else if(correct.equalsIgnoreCase("draw")){
                     ((TextView)v.findViewById(R.id.vs)).setTextColor(Color.argb(250,219,18,15));
                     ((TextView)v.findViewById(R.id.drawodds)).setTextColor(Color.argb(250,219,18,15));
                     ((TextView)v.findViewById(R.id.draw)).setTextColor(Color.argb(250,219,18,15));
                     s += tips.get(position).getDraw();
+
+                }else if (correct.equalsIgnoreCase("away")){
+                    ((TextView)v.findViewById(R.id.team2)).setTextColor(Color.argb(250,219,18,15));
+                    ((TextView)v.findViewById(R.id.awayodds)).setTextColor(Color.argb(250,219,18,15));
+                    ((TextView)v.findViewById(R.id.away)).setTextColor(Color.argb(250,219,18,15));
+                    s += tips.get(position).getAway();
+
                 }else {
                     s = "Pick -> "+tips.get(position).getCorrect();
                 }

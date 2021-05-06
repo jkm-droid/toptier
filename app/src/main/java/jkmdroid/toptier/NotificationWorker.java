@@ -15,7 +15,7 @@ public class NotificationWorker extends Worker{
     }
     @NonNull
     public Result doWork() {
-        show_notification("Hello there, login to check the latest tips");
+        show_notification("New tips have just been added...check them out");
         return Result.success();
     }
     
@@ -31,6 +31,8 @@ public class NotificationWorker extends Worker{
         NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), "top tier odds")
                 .setContentTitle("New tips added")
                 .setContentText(notificationMessage)
+                .setVibrate(new long[]{1000,1000,1000,1000,1000})
+                .setDefaults(-1)
                 .setSmallIcon(R.mipmap.ic_launcher);
 
         notificationManager.notify(1, notification.build());
