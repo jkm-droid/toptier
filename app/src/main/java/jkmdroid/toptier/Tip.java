@@ -8,7 +8,7 @@ public class Tip{
     private int id;
     private String teamA, teamB;
     private double home, draw, away;
-    private String correct;
+    private String correct, score;
     private long matchTime, createdAt;
     private int vipStatus;
     private String winLose;
@@ -20,6 +20,10 @@ public class Tip{
 
     public void setCorrect(String c) {
         correct = c;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 
     public void setCreatedAt(String createdAt) throws ParseException {
@@ -58,6 +62,10 @@ public class Tip{
 
     public String getCorrect() {
         return correct;
+    }
+
+    public String getScore() {
+        return score;
     }
 
     public double getAway() {
@@ -108,9 +116,4 @@ public class Tip{
         this.winLose = winLose;
     }
 
-//    public enum Correct{
-//        DRAW,
-//        HOME,
-//        AWAY
-//    }
 }

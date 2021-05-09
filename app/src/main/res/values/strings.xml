@@ -15,8 +15,8 @@
     <string name="danger_zone">Danger Zone</string>
     <string name="deactivate_account">Deactivate Account</string>
     <string name="user_status">Your Status</string>
-    <string name="become_a_vip_member_for_only_kshs_1500_to_enjoy_privileged_services">Become a VIP member for more and bigger odds</string>
-    <string name="join_vip_for_kshs_1500">Join VIP for Kshs.1500</string>
+    <string name="become_a_vip_member_for_only_kshs_1500_to_enjoy_privileged_services">Become a VIP member for correct, bigger, and sure odds</string>
+    <string name="join_vip_for_kshs_1500">Join VIP for $15</string>
     <string name="normal">Normal</string>
     <string name="man_utd">Man City</string>
     <string name="away">Away</string>
@@ -54,5 +54,6 @@
     <string name="won">Status: WON</string>
     <string name="available_subscriptions">Available Subscriptions</string>
     <string name="user"><![CDATA[<user>]]></string>
-    <string name="top_tier">Top-Tier</string>
+    <string name="top_tier">TopTier</string>
+    <string name="toptier_odds">TopTier Odds</string>
 </resources>

@@ -35,7 +35,11 @@ public class FragmentLatest extends Fragment{
         errorView = view.findViewById(R.id.error);
         if (MyHelper.isOnline(getActivity()))
             errorView.setText("Loading tips....");
-        else {errorView.setText("There is no internet connection!!"); errorView.setTextColor(this.getResources().getColor(R.color.errorColor));}
+        else {
+
+            errorView.setText("There is no internet connection!!");
+            errorView.setTextColor(this.getResources().getColor(R.color.errorColor));
+        }
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
@@ -51,6 +55,8 @@ public class FragmentLatest extends Fragment{
     }
     public void setTips(ArrayList<Tip> tips){
         this.tips = tips;
+        if (tips == null)
+            errorView.setText("No tips found");
         if (getContext() == null)
             return;
         listView.setAdapter(new Adapter(getContext(), tips));

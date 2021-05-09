@@ -38,12 +38,15 @@ public class FragmentAllMatches extends Fragment{
             widthOfDevice = listView.getWidth();
         });
         ((TextView) view.findViewById(R.id.title)).setText("PAST MATCHES");
-//        System.out.println("In all matches fragment");
 
         errorView = view.findViewById(R.id.error);
+
         if (MyHelper.isOnline(getActivity()))
             errorView.setText("Loading tips....");
-        else {errorView.setText("There is no internet connection!!"); errorView.setTextColor(this.getResources().getColor(R.color.errorColor));}
+        else {
+            errorView.setText("There is no internet connection!!");
+            errorView.setTextColor(this.getResources().getColor(R.color.errorColor));
+        }
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
@@ -64,7 +67,7 @@ public class FragmentAllMatches extends Fragment{
     public void setTips(ArrayList<Tip> tips){
         this.tips = tips;
         if (tips == null)
-            System.out.println("Tips is null");
+            errorView.setText("No tips found");
         if (getContext() == null)
             return;
         listView.setAdapter(new Adapter(getContext(), tips));
@@ -102,6 +105,7 @@ public class FragmentAllMatches extends Fragment{
             ((TextView)v.findViewById(R.id.drawodds)).setText(""+tips.get(position).getDraw());
             ((TextView)v.findViewById(R.id.homeodds)).setText(""+tips.get(position).getHome());
             ((TextView)v.findViewById(R.id.awayodds)).setText(""+tips.get(position).getAway());
+
             ImageView imgWinlose = v.findViewById(R.id.winlose);
 
             if (tips.get(position).getVipStatus() == 10){
@@ -136,6 +140,12 @@ public class FragmentAllMatches extends Fragment{
                 }else{
                     s = "Pick -> "+tips.get(position).getCorrect();
                 }
+                if (tips.get(position).getScore().equals(""))
+                    ((TextView)v.findViewById(R.id.score)).setText(""+tips.get(position).getScore());
+                else
+                    ((TextView)v.findViewById(R.id.score)).setText("Score:"+tips.get(position).getScore());
+
+                ((TextView) v.findViewById(R.id.score)).setTextColor(Color.argb(250,0,165,0));
                 ((TextView) v.findViewById(R.id.correct)).setTextColor(Color.argb(250,0,165,0));
                 ((TextView) v.findViewById(R.id.correct)).setText(s);
 
@@ -163,6 +173,12 @@ public class FragmentAllMatches extends Fragment{
                 }else {
                     s = "Pick -> "+tips.get(position).getCorrect();
                 }
+                if (tips.get(position).getScore().equals(""))
+                    ((TextView)v.findViewById(R.id.score)).setText(""+tips.get(position).getScore());
+                else
+                    ((TextView)v.findViewById(R.id.score)).setText("Score:"+tips.get(position).getScore());
+
+                ((TextView) v.findViewById(R.id.score)).setTextColor(Color.argb(250, 219, 18, 15));
                 ((TextView) v.findViewById(R.id.correct)).setTextColor(Color.argb(250, 219, 18, 15));
                 ((TextView) v.findViewById(R.id.correct)).setText(s);
             }

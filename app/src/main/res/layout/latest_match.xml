@@ -165,9 +165,10 @@
             android:text="@string/pick_away_2_74"
             android:textColor="@color/vip_status"
             android:textStyle="bold"
+            android:layout_weight="1"
             android:layout_marginBottom="2dp"
             android:layout_marginStart="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp" />
     </LinearLayout>

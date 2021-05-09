@@ -85,12 +85,10 @@ public class FragmentProfile extends Fragment {
                         @Override
                         public void run() {
                             try {
-                                System.out.println("data to send: "+data);
                                 String response = MyHelper.connectOnline(link, data);
                                 Message message = new Message();
                                 message.arg1 = 1;
                                 message.obj = response;
-                                System.out.println("response: "+response);
                                 handler.sendMessage(message);
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -117,7 +115,7 @@ public class FragmentProfile extends Fragment {
         }
         else if (preferences.getInt(Preferences.Login.STATUS, 5) == 10){
             ((TextView)view.findViewById(R.id.status)).setText("VIP");
-            ((TextView)view.findViewById(R.id.profile_message)).setText("Thank you for becoming one of our VIP members\nEnjoy our privileged services and tips");
+            ((TextView)view.findViewById(R.id.profile_message)).setText("Thank you for becoming one of our VIP members\nEnjoy our privileged services, VIP tips, and 24hours support");
 
            //((LinearLayout) view.findViewById(R.id.vip)).removeAllViews();
             LinearLayout linearLayout =  view.findViewById(R.id.vip);

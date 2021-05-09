@@ -42,6 +42,7 @@
                 android:layout_width="0dp"
                 android:text="24\nMatches"/>
             <TextView
+                android:id="@+id/correct_tips"
                 android:layout_margin="10dp"
                 android:gravity="center"
                 android:textStyle="bold"
@@ -67,6 +68,7 @@
                 android:layout_width="0dp"
                 android:text="@string/_13_nupcoming_matches"/>
             <TextView
+                android:id="@+id/members"
                 android:layout_margin="10dp"
                 android:gravity="center"
                 android:textStyle="bold"

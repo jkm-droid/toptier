@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat. START )){
             drawer.closeDrawer(GravityCompat. START ) ;
         }
-        Intent intent;
+
         switch (menuItem.getItemId()) {
             case R.id.privacy:
                 Intent privacy = new Intent(Intent.ACTION_VIEW);
@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             try {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Top-Tier Odds");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "TopTier Odds");
                 intent.putExtra(Intent.EXTRA_TEXT, string);
                 startActivity(Intent.createChooser(intent, "Share with"));
             } catch (ActivityNotFoundException ex) {
@@ -300,36 +300,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         alertDialog.setMessage("Are you sure you want to exit?");
         alertDialog.setCancelable(false);
 
-        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-                //if clicked
-                //close the dialog box,
-                //log out the user
-                SharedPreferences preferences = getSharedPreferences(Preferences.Login.NAME, MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.clear();
-                editor.apply();
-                startActivity(new Intent(MainActivity.this, UserActivity.class));
-                finish();
-            }
+        alertDialog.setPositiveButton("Yes", (arg0, arg1) -> {
+            //if clicked
+            //close the dialog box,
+            //log out the user
+            SharedPreferences preferences = getSharedPreferences(Preferences.Login.NAME, MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.apply();
+            startActivity(new Intent(MainActivity.this, UserActivity.class));
+            finish();
         });
 
-        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //if clicked
-                //close the dialog box and do nothing
-                dialog.cancel();
-            }
+        alertDialog.setNegativeButton("No", (dialog, which) -> {
+            //if clicked
+            //close the dialog box and do nothing
+            dialog.cancel();
         });
         //create the alert box and display it to the user
         alertDialog.create().show();
     }
 
     private ArrayList<Tip> extractTips(JSONObject response) {
-        JSONArray array = null;
+        JSONArray array;
         JSONObject object;
         ArrayList<Tip> tips = new ArrayList<>();
         try {
@@ -352,6 +345,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                tip.setScore(object.getString("score"));
                 tip.setVipStatus(object.getInt("vip_status"));
                 try {
                     tip.setCreatedAt(object.getString("created_at"));
@@ -438,7 +432,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     public void onSuccess(JSONObject response) throws JSONException {
                         if (fragmentHome == null)
                             fragmentHome = new FragmentHome();
-                        fragmentHome.setData(response.getInt("upcoming_matches"), response.getInt("all_matches"));
+                        fragmentHome.setData(
+                                response.getInt("upcoming_matches"),
+                                response.getInt("all_matches"),
+                                response.getInt("correct_tips"),
+                                response.getInt("all_members")
+                        );
                     }
                 });
                 postJson2.get();
@@ -478,7 +477,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // this is for fragment tabs
         @Override
         public Fragment getItem(int position){
-//            System.out.println("Requesting fragment for position "+position);
             switch (position){
                 case 0:
                     if (fragmentHome == null)
@@ -487,13 +485,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 case 1:
                     if (fragmentLatest == null){
                         fragmentLatest = new FragmentLatest();
-                        fragmentLatest.setOnFragmentRestart(new FragmentAllMatches.OnFragmentRestart() {
-                            @Override
-                            public void onTipsReceived() {
-                                if (latestTips != null)
-                                    fragmentLatest.setTips(latestTips);
-                                else fragmentLatest.setTips(new ArrayList<>());
-                            }
+                        fragmentLatest.setOnFragmentRestart(() -> {
+                            if (latestTips != null)
+                                fragmentLatest.setTips(latestTips);
+                            else fragmentLatest.setTips(new ArrayList<>());
                         });
                     }
                     if (latestTips != null)
@@ -502,13 +497,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 case 2:
                     if (fragmentAllMatches == null){
                         fragmentAllMatches = new FragmentAllMatches();
-                        fragmentAllMatches.setOnFragmentRestart(new FragmentAllMatches.OnFragmentRestart() {
-                            @Override
-                            public void onTipsReceived() {
-                                if (allMacthesTips != null)
-                                    fragmentAllMatches.setTips(allMacthesTips);
-                                else fragmentAllMatches.setTips(new ArrayList<>());
-                            }
+                        fragmentAllMatches.setOnFragmentRestart(() -> {
+                            if (allMacthesTips != null)
+                                fragmentAllMatches.setTips(allMacthesTips);
+                            else fragmentAllMatches.setTips(new ArrayList<>());
                         });
                     }
                     if (allMacthesTips != null)
