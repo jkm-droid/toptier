@@ -11,6 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+/**
+ * Created by jkm-droid on 05/04/2021.
+ */
+
 public class FragmentHome extends Fragment {
     TextView allMatches, upComingMatches, homeMessage, correctTips, allMembers;
     private int all = 360;

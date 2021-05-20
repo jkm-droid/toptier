@@ -20,4 +20,6 @@
     <color name="faded">#E4E0E0</color>
     <color name="backgroundApp">#0C0C0C</color>
     <color name="homeTabs">#FCFAF6F6</color>
+    <color name="colorVIP1">#FF5722</color>
+    <color name="colorVIP2">#FFC107</color>
 </resources>

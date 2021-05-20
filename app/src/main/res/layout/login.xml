@@ -79,7 +79,8 @@
                 android:text="@string/fill_all_fields"
                 android:layout_marginStart="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp" />
             <Button
                 android:id="@+id/button"
                 android:layout_margin="10dp"

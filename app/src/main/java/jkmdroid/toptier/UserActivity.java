@@ -2,12 +2,16 @@ package jkmdroid.toptier;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,6 +23,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,26 +32,27 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+/**
+ * Created by jkm-droid on 05/04/2021.
+ */
+
 public class UserActivity extends AppCompatActivity{
     final int REGISTER = 1, LOGIN = 2;
     private ProgressDialog progressDialog;
-
+    Tip tip;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        MyHelper.restart();
-        MyHelper.runtime();
-
         setContentView(R.layout.intro);
-
+        tip = new Tip();
         init();
     }
 
     private void init(){
-        SharedPreferences preferences = getSharedPreferences(Preferences.Login.NAME, MODE_PRIVATE);
+        SharedPreferences loginPreferences = getSharedPreferences(Preferences.Login.NAME, MODE_PRIVATE);
 
-        if (preferences.getString(Preferences.Login.USERNAME,"").length() > 3){
-            if (preferences.getBoolean(Preferences.Login.LOGGED, false)){
+        if (loginPreferences.getString(Preferences.Login.USERNAME,"").length() > 3){
+            if (loginPreferences.getBoolean(Preferences.Login.LOGGED, false)){
                 startActivity(new Intent(UserActivity.this, MainActivity.class));
                 finish();
             }else {
@@ -55,6 +61,7 @@ public class UserActivity extends AppCompatActivity{
         }else {
             register();
         }
+
     }
 
     private void register(){
@@ -70,21 +77,17 @@ public class UserActivity extends AppCompatActivity{
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone = ((EditText)findViewById(R.id.phone)).getText().toString();
                 String password = ((EditText)findViewById(R.id.password)).getText().toString();
                 String confirm = ((EditText)findViewById(R.id.confirm)).getText().toString();
                 String email = ((EditText)findViewById(R.id.email)).getText().toString();
                 String username = ((EditText)findViewById(R.id.username)).getText().toString();
 
-                phone = phone.trim();
                 password = password.trim();
                 confirm = confirm.trim();
                 email = email.trim();
                 username = username.trim();
 
                 String error = "";
-                if (phone.length() < 10)
-                    error += "\nPhone invalid";
                 if (password.length() < 5)
                     error += "\nPassword too short";
                 if (!password.equals(confirm))
@@ -110,7 +113,7 @@ public class UserActivity extends AppCompatActivity{
                 else {
                     String data = "";
                     try {
-                        data += URLEncoder.encode("phonenumber", "UTF-8") + "=" + URLEncoder.encode(phone, "UTF-8") + "&";
+//                        data += URLEncoder.encode("phonenumber", "UTF-8") + "=" + URLEncoder.encode(phone, "UTF-8") + "&";
                         data += URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") + "&";
                         data += URLEncoder.encode("register_user", "UTF-8") + "=" + URLEncoder.encode("register", "UTF-8") + "&";
                         data += URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&";
@@ -122,7 +125,10 @@ public class UserActivity extends AppCompatActivity{
                         progressDialog.setCancelable(true);
                         if (progressDialog != null)
                             progressDialog.show();
-                        sendOnline(REGISTER,"https://toptier.mblog.co.ke/register_user.php", data);
+                        sendOnline(REGISTER,"https://toptier.mblog.co.ke/users/register_user.php", data);
+
+                        tip.setUsername(username);
+                        tip.setEmail(email);
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
@@ -130,6 +136,7 @@ public class UserActivity extends AppCompatActivity{
             }
         });
     }
+
     private void login(){
         setContentView(R.layout.login);
         //redirect to the register page if the user lacks
@@ -181,7 +188,7 @@ public class UserActivity extends AppCompatActivity{
                         progressDialog.setCancelable(true);
                         if (progressDialog != null)
                             progressDialog.show();
-                        sendOnline(LOGIN, "https://toptier.mblog.co.ke/login_user.php", data);
+                        sendOnline(LOGIN, "https://toptier.mblog.co.ke/users/login_user.php", data);
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
@@ -200,24 +207,32 @@ public class UserActivity extends AppCompatActivity{
                 switch (item){
                     case REGISTER:
                         if (((String)msg.obj).equalsIgnoreCase("registered successfully")){
-                        AlertDialog.Builder builder = new AlertDialog.Builder(UserActivity.this);
-                        builder.setTitle("Registration is Successful")
-                                .setMessage("You have been registered successfully")
-                                .setPositiveButton("Login Now", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        login();
-                                    }
-                                })
-                                .setCancelable(false)
-                                .show();
+                            SharedPreferences preferences = getSharedPreferences(Preferences.Register.NAME, MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+
+                            editor.putString(Preferences.Register.EMAIL, tip.getEmail());
+                            editor.putString(Preferences.Register.USERNAME, tip.getUsername());
+                            editor.putBoolean(Preferences.Register.REGISTERED, true);
+                            editor.apply();
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(UserActivity.this);
+                            builder.setTitle("Registration is Successful")
+                                    .setMessage("You have been registered successfully")
+                                    .setPositiveButton("Login Now", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            login();
+                                        }
+                                    })
+                                    .setCancelable(false)
+                                    .show();
                         }else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(UserActivity.this);
-                                builder.setMessage(((String)msg.obj))
-                                        .setTitle("Error Occurred")
-                                        .setCancelable(false)
-                                        .setPositiveButton("OK", null)
-                                        .show();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(UserActivity.this);
+                            builder.setMessage(((String)msg.obj))
+                                    .setTitle("Error Occurred")
+                                    .setCancelable(false)
+                                    .setPositiveButton("OK", null)
+                                    .show();
                         }
                         break;
                     case LOGIN:
@@ -236,11 +251,11 @@ public class UserActivity extends AppCompatActivity{
                                     editor.putBoolean(Preferences.Login.LOGGED, true);
                                     editor.apply();
 
-                                    Toast.makeText(UserActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                                   Toast.makeText(UserActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
                                     startActivity(new Intent(UserActivity.this, MainActivity.class));
                                     finish();
-                                //login attempt is unsuccessful
+                                    //login attempt is unsuccessful
                                 }else if(object.getInt("status_code") == 201){
                                     AlertDialog.Builder builder = new AlertDialog.Builder(UserActivity.this);
                                     builder.setMessage(object.getString("message"))
@@ -270,12 +285,10 @@ public class UserActivity extends AppCompatActivity{
             @Override
             public void run() {
                 try {
-                    System.out.println("data to send: "+data);
                     String response = MyHelper.connectOnline(link, data);
                     Message message = new Message();
                     message.arg1 = 1;
                     message.obj = response;
-                    System.out.println("response: "+response);
                     handler.sendMessage(message);
                 } catch (IOException e) {
                     e.printStackTrace();

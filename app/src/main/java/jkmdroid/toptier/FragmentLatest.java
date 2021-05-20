@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,10 +21,15 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by jkm-droid on 05/04/2021.
+ */
+
 public class FragmentLatest extends Fragment{
     private ArrayList<Tip> tips;
     ListView listView;
     TextView errorView;
+    ImageView imageError;
     FragmentAllMatches.OnFragmentRestart onFragmentRestart;
     @Nullable
     @Override
@@ -33,10 +39,12 @@ public class FragmentLatest extends Fragment{
         ((TextView) view.findViewById(R.id.title)).setText("LATEST MATCHES");
 
         errorView = view.findViewById(R.id.error);
+        imageError = view.findViewById(R.id.image_error);
+
         if (MyHelper.isOnline(getActivity()))
             errorView.setText("Loading tips....");
         else {
-
+            imageError.setVisibility(View.VISIBLE);
             errorView.setText("There is no internet connection!!");
             errorView.setTextColor(this.getResources().getColor(R.color.errorColor));
         }
@@ -101,6 +109,7 @@ public class FragmentLatest extends Fragment{
 
             String correct = tips.get(position).getCorrect(), s;
             s = "Pick: "+correct+" -> ";
+
             if (correct.equalsIgnoreCase("home")){
                 ((TextView)v.findViewById(R.id.team1)).setTextColor(Color.argb(250,0,165,0));
                 ((TextView)v.findViewById(R.id.homeodds)).setTextColor(Color.argb(250,0,165,0));
@@ -117,8 +126,9 @@ public class FragmentLatest extends Fragment{
                 ((TextView)v.findViewById(R.id.draw)).setTextColor(Color.argb(250,0,165,0));
                 s += tips.get(position).getDraw();
             }else{
-                s = "Pick -> "+tips.get(position).getCorrect();
+                s = "Pick: "+tips.get(position).getCorrect()+" -> "+tips.get(position).getOther();
             }
+
             ((TextView) v.findViewById(R.id.correct)).setText(s);
             return v;
         }

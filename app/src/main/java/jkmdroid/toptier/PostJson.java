@@ -15,6 +15,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Created by jkm-droid on 05/04/2021.
+ */
+
 public class PostJson{
     private String url;
     private JSONObject object;
@@ -87,7 +91,7 @@ public class PostJson{
                         e.printStackTrace();
                     }
                 }, error -> {
-                    System.out.println("-------------------------------------Error response ----------------------------------------------------------------------------");
+//                    System.out.println("-------------------------------------Error response ----------------------------------------------------------------------------");
 
                     if (error != null) {
                         System.out.print("Error: " + error);
@@ -95,8 +99,8 @@ public class PostJson{
                             System.out.print("Status Code " + error.networkResponse.statusCode);
                             System.out.print("Response Data " + error.networkResponse.data);
                         }
-                        System.out.print("Cause " + error.getCause());
-                        System.out.println("message" + error.getMessage());
+//                        System.out.print("Cause " + error.getCause());
+//                        System.out.println("message" + error.getMessage());
                     }
                 });
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(

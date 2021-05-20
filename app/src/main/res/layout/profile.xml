@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:background="@color/backgroundApp"
@@ -15,11 +16,13 @@
 
         <Switch
             android:id="@+id/deactivate"
+            android:visibility="gone"
             android:layout_margin="10dp"
             android:text="@string/deactivate_account"
             android:textColor="@color/blue_for_buttons"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
     </LinearLayout>
     <LinearLayout
         android:layout_above="@id/bottom"

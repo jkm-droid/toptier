@@ -4,15 +4,36 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Created by jkm-droid on 05/04/2021.
+ */
+
 public class Tip{
     private int id;
     private String teamA, teamB;
-    private double home, draw, away;
+    private double home, draw, away, other;
     private String correct, score;
     private long matchTime, createdAt;
     private int vipStatus;
     private String winLose;
+    private String username;
+    private String email;
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public void setAway(double away) {
         this.away = away;
@@ -116,4 +137,11 @@ public class Tip{
         this.winLose = winLose;
     }
 
+    public double getOther() {
+        return other;
+    }
+
+    public void setOther(double other) {
+        this.other = other;
+    }
 }

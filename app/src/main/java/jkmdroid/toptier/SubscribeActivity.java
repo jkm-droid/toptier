@@ -33,6 +33,10 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * Created by jkm-droid on 05/04/2021.
+ */
+
 public class SubscribeActivity extends AppCompatActivity implements PurchasesUpdatedListener {
     BillingClient billingClient;
     AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener;
@@ -174,7 +178,7 @@ public class SubscribeActivity extends AppCompatActivity implements PurchasesUpd
             e.printStackTrace();
         }
         final String data = d;
-        final String link = "https://toptier.mblog.co.ke/subscriptions.php";
+        final String link = "https://toptier.mblog.co.ke/subscriptions/subscriptions.php";
 
         @SuppressLint("HandlerLeak")Handler handler = new Handler(){
             @Override

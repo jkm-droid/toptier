@@ -5,6 +5,10 @@ import android.content.Context;
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 
+/**
+ * Created by jkm-droid on 05/04/2021.
+ */
+
 public class BillingClientSetup {
     private static BillingClient instance;
 

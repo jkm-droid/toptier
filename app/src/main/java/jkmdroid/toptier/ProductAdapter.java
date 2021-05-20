@@ -16,6 +16,10 @@ import com.android.billingclient.api.SkuDetails;
 
 import java.util.List;
 
+/**
+ * Created by jkm-droid on 05/04/2021.
+ */
+
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
 
     AppCompatActivity appCompatActivity;

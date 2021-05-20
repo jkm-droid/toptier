@@ -5,6 +5,8 @@ import android.net.ConnectivityManager;
 import android.os.Environment;
 import android.text.format.DateFormat;
 
+import androidx.annotation.NonNull;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,13 +18,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
 
+/**
+ * Created by jkm-droid on 05/04/2021.
+ */
+
 public class MyHelper {
-    public static boolean isOnline(Context context) {
+    public static boolean isOnline(@NonNull Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         return manager.getActiveNetworkInfo() != null && manager.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 
+    @NonNull
     public static String toPostDate(long millis) {
         Calendar calendar = Calendar.getInstance();
         int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
@@ -32,10 +39,10 @@ public class MyHelper {
         int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
         calendar.setTimeInMillis(millis);
         if (millis < System.currentTimeMillis()){
+            if (System.currentTimeMillis() - millis < (115*1000*60)){
+                return "In play";
+            }
             if (dayOfYear == calendar.get(Calendar.DAY_OF_YEAR)) {
-                if (hour == calendar.get(Calendar.HOUR_OF_DAY)) {
-                    return "Started "+(minute - calendar.get(Calendar.MINUTE)) + " minutes ago";
-                }
                 return "Today, "+DateFormat.format("hh:mm a", millis).toString();
             } else if (dayOfYear - calendar.get(Calendar.DAY_OF_YEAR) == 1) {
                 return "Yesterday, " + DateFormat.format("hh:mm a", millis).toString();

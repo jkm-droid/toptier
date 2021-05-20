@@ -9,6 +9,10 @@ import androidx.work.WorkerParameters;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+/**
+ * Created by jkm-droid on 05/04/2021.
+ */
+
 public class NotificationWorker extends Worker{
     public NotificationWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -24,15 +28,14 @@ public class NotificationWorker extends Worker{
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel("Top-Tier Odds", "Top-Tier Odds", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel("TopTier Odds", "TopTier Odds", NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }
 
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), "top tier odds")
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), "toptier odds")
                 .setContentTitle("New tips added")
                 .setContentText(notificationMessage)
-                .setVibrate(new long[]{1000,1000,1000,1000,1000})
-                .setDefaults(-1)
+                .setVibrate(new long[]{1000,1000})
                 .setSmallIcon(R.mipmap.ic_launcher);
 
         notificationManager.notify(1, notification.build());

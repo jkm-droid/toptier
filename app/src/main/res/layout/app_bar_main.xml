@@ -16,6 +16,7 @@
             android:layout_height= "?attr/actionBarSize"
             android:background= "@color/colorAppBar"/>
     </com.google.android.material.appbar.AppBarLayout>
+
     <RelativeLayout
         android:id="@+id/mainFrame"
         android:layout_below="@+id/up"

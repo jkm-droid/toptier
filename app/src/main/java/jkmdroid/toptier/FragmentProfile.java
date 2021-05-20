@@ -55,7 +55,7 @@ public class FragmentProfile extends Fragment {
                         e.printStackTrace();
                     }
                     final String data = d;
-                    final String link = "https://toptier.mblog.co.ke/deactivate_account.php";
+                    final String link = "https://toptier.mblog.co.ke/users/deactivate_account.php";
                     @SuppressLint("HandlerLeak") Handler handler = new Handler(){
                         @SuppressLint("HandlerLeak")
                         @Override
