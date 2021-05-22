@@ -1,4 +1,4 @@
-package jkmdroid.toptier;
+ package jkmdroid.toptier;
 
 import android.content.Context;
 import android.content.Intent;
@@ -73,6 +73,7 @@ public class FragmentFreeTips extends Fragment {
         imageVip2 = view.findViewById(R.id.vip_image2);
 
         if (MyHelper.isOnline(getActivity())) {
+            errorView.setVisibility(View.VISIBLE);
             errorView.setText("Loading tips....");
         }else {
             imageError.setVisibility(View.VISIBLE);
@@ -99,7 +100,7 @@ public class FragmentFreeTips extends Fragment {
             return;
         listView.setAdapter(new Adapter(getContext(), tips));
         if (tips.size() > 0){
-            errorView.setText("");
+            errorView.setVisibility(View.GONE);
             if( usernameLen> 3) {
                 if (isRegistered) {
                     imageVip1.setVisibility(View.VISIBLE);
@@ -119,7 +120,7 @@ public class FragmentFreeTips extends Fragment {
 
     private void set_animation(TextView textView) {
         Animation anim = new AlphaAnimation(0.0f, 1.0f);
-        anim.setDuration(1500); //manage the blinking time
+        anim.setDuration(1800); //manage the blinking time
         anim.setStartOffset(20);
         anim.setRepeatMode(Animation.REVERSE);
         anim.setRepeatCount(Animation.INFINITE);

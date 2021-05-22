@@ -40,7 +40,7 @@ public class MyHelper {
         calendar.setTimeInMillis(millis);
         if (millis < System.currentTimeMillis()){
             if (System.currentTimeMillis() - millis < (115*1000*60)){
-                return "In play";
+                return "Now playing";
             }
             if (dayOfYear == calendar.get(Calendar.DAY_OF_YEAR)) {
                 return "Today, "+DateFormat.format("hh:mm a", millis).toString();
@@ -51,7 +51,7 @@ public class MyHelper {
             }
         }else {
             if (dayOfYear == calendar.get(Calendar.DAY_OF_YEAR)){
-                if (calendar.get(Calendar.HOUR_OF_DAY) <= 1+hour){
+                if (millis - System.currentTimeMillis() < (60*1000*60)){
                     return (calendar.get(Calendar.MINUTE)-minute) + " minutes remaining";
                 }
                 return "Today "+DateFormat.format("hh:mm a", millis).toString();

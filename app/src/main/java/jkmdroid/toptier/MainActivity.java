@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final PeriodicWorkRequest messagesWorkRequest = new PeriodicWorkRequest
                 .Builder(NotificationWorker.class, 6, TimeUnit.HOURS)
                 .setConstraints(constraints)
+                .setInitialDelay(10, TimeUnit.MINUTES)
                 .build();
 
 
