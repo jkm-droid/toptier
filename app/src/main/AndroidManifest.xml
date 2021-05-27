@@ -14,17 +14,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TopTier">
-        <activity android:name=".FreeTipsActivity"/>
-        <activity android:name=".LauncherScreen">
+        <activity android:name="jkmdroid.toptier.FreeTipsActivity"/>
+        <activity android:name="jkmdroid.toptier.LauncherScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SubscribeActivity" />
-        <activity android:name=".UserActivity" />
+        <activity android:name="jkmdroid.toptier.MainActivity" />
+        <activity android:name="jkmdroid.toptier.SubscribeActivity" />
+        <activity android:name="jkmdroid.toptier.UserActivity" />
     </application>
 
 </manifest>

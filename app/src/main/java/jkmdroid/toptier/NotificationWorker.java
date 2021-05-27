@@ -35,7 +35,7 @@ public class NotificationWorker extends Worker{
         NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), "toptier odds")
                 .setContentTitle("New tips added")
                 .setContentText(notificationMessage)
-                .setVibrate(new long[]{1000,1000})
+                .setVibrate(new long[]{1000})
                 .setDefaults(-1)
                 .setSmallIcon(R.mipmap.ic_launcher);
 

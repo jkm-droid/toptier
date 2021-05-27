@@ -3,14 +3,12 @@ package jkmdroid.toptier;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,24 +34,20 @@ public class FragmentLatest extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.activity_latest, null);
         listView = view.findViewById(R.id.listview);
-        ((TextView) view.findViewById(R.id.title)).setText("LATEST MATCHES");
+        ((TextView) view.findViewById(R.id.title_fragment)).setText("UPCOMING MATCHES");
 
         errorView = view.findViewById(R.id.error);
         imageError = view.findViewById(R.id.image_error);
 
-        if (MyHelper.isOnline(getActivity()))
+        if (MyHelper.isOnline(getActivity())) {
+            errorView.setVisibility(View.VISIBLE);
             errorView.setText("Loading tips....");
-        else {
+        }else {
             imageError.setVisibility(View.VISIBLE);
+            errorView.setVisibility(View.VISIBLE);
             errorView.setText("There is no internet connection!!");
             errorView.setTextColor(this.getResources().getColor(R.color.errorColor));
         }
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER;
-        params.topMargin = 100;
-
-        errorView.setLayoutParams(params);
 
         FrameLayout layout = new FrameLayout(getActivity());
         layout.addView(view);
@@ -63,18 +57,15 @@ public class FragmentLatest extends Fragment{
     }
     public void setTips(ArrayList<Tip> tips){
         this.tips = tips;
-        if (tips == null)
+        if (tips == null) {
+            errorView.setVisibility(View.VISIBLE);
             errorView.setText("No tips found");
+        }
         if (getContext() == null)
             return;
         listView.setAdapter(new Adapter(getContext(), tips));
         if (tips.size() > 0){
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 1);
-            params.gravity = Gravity.CENTER;
-            params.topMargin = 1;
-
-            errorView.setLayoutParams(params);
-            errorView.setText("");
+            errorView.setVisibility(View.GONE);
         }
     }
     public void setOnFragmentRestart(FragmentAllMatches.OnFragmentRestart onFragmentRestart) {

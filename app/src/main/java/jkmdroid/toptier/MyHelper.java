@@ -22,7 +22,8 @@ import java.util.Calendar;
  * Created by jkm-droid on 05/04/2021.
  */
 
-public class MyHelper {
+public class MyHelper{
+
     public static boolean isOnline(@NonNull Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 

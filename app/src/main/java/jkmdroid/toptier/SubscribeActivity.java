@@ -92,9 +92,10 @@ public class SubscribeActivity extends AppCompatActivity implements PurchasesUpd
                         loadAllSubscriptions();
                     }
 
-                }else{
-                    Toast.makeText(getApplicationContext(), "Error code: "+billingResult.getResponseCode(), Toast.LENGTH_LONG).show();
                 }
+//                else{
+//                    Toast.makeText(getApplicationContext(), "Error code: "+billingResult.getResponseCode(), Toast.LENGTH_LONG).show();
+//                }
             }
 
             @Override

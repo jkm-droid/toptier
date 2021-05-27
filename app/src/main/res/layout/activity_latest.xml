@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
     android:background="@color/black"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/title_fragment"
         android:text="@string/latest_matches"
         android:layout_marginStart="40dp"
-        android:layout_margin="12dp"
+        android:layout_margin="6dp"
         android:textColor="#F1EAEA"
         android:textSize="15sp"
         android:textAlignment="center"
@@ -20,7 +20,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_gravity="center_horizontal"
+        android:layout_centerInParent="true"
         android:orientation="vertical"
         android:layout_height="wrap_content">
 
@@ -35,19 +35,20 @@
         <TextView
             android:id="@+id/error"
             android:textColor="@color/green"
+            android:visibility="gone"
             android:textAlignment="center"
             android:layout_marginTop="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal" />
+            android:gravity="center" />
 
     </LinearLayout>
 
 
     <ListView
         android:id="@+id/listview"
+        android:layout_below="@+id/title_fragment"
         android:layout_width="match_parent"
         android:layout_marginBottom="2dp"
         android:layout_height="match_parent"/>
-</LinearLayout>
+</RelativeLayout>

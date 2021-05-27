@@ -1,23 +1,20 @@
 package jkmdroid.toptier;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
@@ -30,36 +27,31 @@ public class FragmentAllMatches extends Fragment{
     private ListView listView;
     private OnFragmentRestart onFragmentRestart;
     private ArrayList<Tip> tips;
-    private int widthOfDevice;
-    TextView errorView;
+    TextView errorView, titleView;
     ImageView imageError;
 
+    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.activity_latest, null);
+        View view = inflater.inflate(R.layout.activity_latest, container, false);
         listView = view.findViewById(R.id.listview);
-        listView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            widthOfDevice = listView.getWidth();
-        });
-        ((TextView) view.findViewById(R.id.title)).setText("PAST MATCHES");
+
+        titleView = view.findViewById(R.id.title_fragment);
+        titleView.setText("PAST MATCHES");
 
         errorView = view.findViewById(R.id.error);
         imageError = view.findViewById(R.id.image_error);
 
-        if (MyHelper.isOnline(getActivity()))
+        if (MyHelper.isOnline(getActivity())) {
+            errorView.setVisibility(View.VISIBLE);
             errorView.setText("Loading tips....");
-        else {
+        }else {
             imageError.setVisibility(View.VISIBLE);
+            errorView.setVisibility(View.VISIBLE);
             errorView.setText("There is no internet connection!!");
             errorView.setTextColor(this.getResources().getColor(R.color.errorColor));
         }
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER;
-        params.topMargin = 100;
-
-        errorView.setLayoutParams(params);
 
         FrameLayout layout = new FrameLayout(getActivity());
         layout.addView(view);
@@ -73,18 +65,15 @@ public class FragmentAllMatches extends Fragment{
     }
     public void setTips(ArrayList<Tip> tips){
         this.tips = tips;
-        if (tips == null)
+        if (tips == null) {
+            errorView.setVisibility(View.VISIBLE);
             errorView.setText("No tips found");
+        }
         if (getContext() == null)
             return;
         listView.setAdapter(new Adapter(getContext(), tips));
         if (tips.size() > 0){
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 1);
-            params.gravity = Gravity.CENTER;
-            params.topMargin = 1;
-
-            errorView.setLayoutParams(params);
-            errorView.setText("");
+            errorView.setVisibility(View.GONE);
         }
     }
     interface  OnFragmentRestart{

@@ -1,11 +1,10 @@
- package jkmdroid.toptier;
+package jkmdroid.toptier;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -95,7 +93,8 @@ public class FragmentFreeTips extends Fragment {
     public void setTips(ArrayList<Tip> tips){
         this.tips = tips;
         if (tips == null)
-            errorView.setText("No tips found");
+            errorView.setVisibility(View.VISIBLE);
+        errorView.setText("No tips found");
         if (getContext() == null)
             return;
         listView.setAdapter(new Adapter(getContext(), tips));
@@ -105,20 +104,23 @@ public class FragmentFreeTips extends Fragment {
                 if (isRegistered) {
                     imageVip1.setVisibility(View.VISIBLE);
                     imageVip2.setVisibility(View.VISIBLE);
+                    vipTextView.setVisibility(View.VISIBLE);
                     vipTextView.setText(email+"\nLogin for MORE and CORRECT tips");
                     set_animation(vipTextView);
                 }
             }else{
                 imageVip1.setVisibility(View.VISIBLE);
                 imageVip2.setVisibility(View.VISIBLE);
-                vipTextView.setText("Join VIP for MORE and CORRECT tips");
+                vipTextView.setVisibility(View.VISIBLE);
+                vipTextView.setText("Join VIP for MORE, SURE and CORRECT tips");
                 set_animation(vipTextView);
             }
 
         }
     }
 
-    private void set_animation(TextView textView) {
+
+    public void set_animation(TextView textView) {
         Animation anim = new AlphaAnimation(0.0f, 1.0f);
         anim.setDuration(1800); //manage the blinking time
         anim.setStartOffset(20);
@@ -144,6 +146,35 @@ public class FragmentFreeTips extends Fragment {
         });
         textView.startAnimation(anim);
     }
+
+
+
+//    public void set_animation(TextView textView) {
+//        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+//        anim.setDuration(1800); //manage the blinking time
+//        anim.setStartOffset(20);
+//        anim.setRepeatMode(Animation.REVERSE);
+//        anim.setRepeatCount(Animation.INFINITE);
+//        anim.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//                //change color at start of animation
+//                textView.setTextColor(getActivity().getResources().getColor(R.color.colorVIP1));
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                //change color at end of animation
+//                textView.setTextColor(getActivity().getResources().getColor(R.color.green));
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//                textView.setTextColor(getActivity().getResources().getColor(R.color.colorVIP2));
+//            }
+//        });
+//        textView.startAnimation(anim);
+//    }
 
     interface  OnFragmentRestart{
         void onTipsReceived();

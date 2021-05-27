@@ -20,7 +20,6 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,7 +30,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 
-import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -42,7 +40,6 @@ import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
-import com.android.volley.BuildConfig;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -238,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 try {
                     String url = "https://api.whatsapp.com/send?phone="+
-                            URLEncoder.encode("+254738801655", "UTF-8") +"&text=" + URLEncoder.encode("Hello GolPredicts", "UTF-8");
+                            URLEncoder.encode("+254738801655", "UTF-8") +"&text=" + URLEncoder.encode("Hello Toptier Odds", "UTF-8");
                     i.setPackage("com.whatsapp");
                     i.setData(Uri.parse(url));
                     if (i.resolveActivity(packageManager) != null) {
