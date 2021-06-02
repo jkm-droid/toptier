@@ -40,7 +40,6 @@ public class FragmentHome extends Fragment {
         upComingMatches.setText(upcoming+"\nUpcoming Matches");
         correctTips.setText(correct+"+\nCorrect Tips");
         allMembers.setText(members+"+\nHappy Members");
-        homeMessage.setText("Benefits of choosing this platform\n-Number one accurate odds predictor\n-Get real-time updates\n-Correct odds");
         vipMessage.setText("Join VIP for $15 to enjoy MORE, SURE, and CORRECT tips");
         set_animation(vipMessage);
 

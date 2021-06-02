@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TopTier Odds</string>
+    <string name="app_name">Toptier Odds</string>
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
     <string name="username_email">Username/Email</string>
@@ -55,5 +55,15 @@
     <string name="available_subscriptions">Available Subscriptions</string>
     <string name="user"><![CDATA[<user>]]></string>
     <string name="top_tier">TopTier</string>
-    <string name="toptier_odds">TopTier Odds</string>
+    <string name="toptier_odds">Toptier Odds</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="vip_message"><![CDATA[Become VIP for MORE, CORRECT, & DAILY tips]]></string>
+    <string name="benefits_of_joining_toptier_odds">Benefits of Joining Toptier Odds</string>
+    <string name="benefits_of_choosing_this_app">Benefits of choosing this app:</string>
+    <string name="number_one_accurate_odds_predictor">Number one accurate odds predictor</string>
+    <string name="correct_odds">Correct odds</string>
+    <string name="special_vip_package">Special VIP package</string>
+    <string name="join_vip_for_15_to_get_more_sure_and_correct_tips">Join VIP for $15 to get MORE, SURE, and CORRECT tips</string>
+    <string name="daily_free_tips">Daily FREE tips</string>
 </resources>

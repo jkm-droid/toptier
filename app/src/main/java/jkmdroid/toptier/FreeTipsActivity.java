@@ -59,6 +59,7 @@ public class FreeTipsActivity extends AppCompatActivity implements NavigationVie
     DrawerLayout drawer;
     boolean stopThread = false;
     FragmentFreeTips fragmentFreeTips;
+    FragmentPremium fragmentPremium;
     private ArrayList<Tip> freeTips;
     boolean requestSuccessful = false;
 
@@ -116,7 +117,10 @@ public class FreeTipsActivity extends AppCompatActivity implements NavigationVie
         viewPager = findViewById(R.id.viewPager);
 
         tabLayout.addTab(tabLayout.newTab().setText(""));
-        tabLayout.getTabAt(0).setText("SOME OF OUR PAST TIPS");
+        tabLayout.getTabAt(0).setText("FREE & PAST TIPS");
+        tabLayout.addTab(tabLayout.newTab().setText(""));
+        tabLayout.getTabAt(1).setText("PREMIUM");
+
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 
@@ -220,11 +224,13 @@ public class FreeTipsActivity extends AppCompatActivity implements NavigationVie
                 Intent privacy = new Intent(Intent.ACTION_VIEW);
                 privacy.setData(Uri.parse("https://toptier.mblog.co.ke/info/privacy.html"));
                 startActivity(privacy);
+                finish();
                 break;
             case R.id.terms:
                 Intent terms = new Intent(Intent.ACTION_VIEW);
                 terms.setData(Uri.parse("https://toptier.mblog.co.ke/info/terms.html"));
                 startActivity(terms);
+                finish();
                 break;
             case R.id.developers:
                 Intent dev = new Intent(Intent.ACTION_VIEW);
@@ -237,7 +243,7 @@ public class FreeTipsActivity extends AppCompatActivity implements NavigationVie
 
                 try {
                     String url = "https://api.whatsapp.com/send?phone=" +
-                            URLEncoder.encode("+254738801655", "UTF-8") + "&text=" + URLEncoder.encode("Hello GolPredicts", "UTF-8");
+                            URLEncoder.encode("+254738801655", "UTF-8") + "&text=" + URLEncoder.encode("Hello Toptier Odds", "UTF-8");
                     i.setPackage("com.whatsapp");
                     i.setData(Uri.parse(url));
                     if (i.resolveActivity(packageManager) != null) {
@@ -251,7 +257,7 @@ public class FreeTipsActivity extends AppCompatActivity implements NavigationVie
                 Intent email = new Intent(Intent.ACTION_SEND);
                 email.putExtra(Intent.EXTRA_EMAIL, new String[]{"toptierodds@gmail.com"});
                 email.putExtra(Intent.EXTRA_SUBJECT, "");
-                email.putExtra(Intent.EXTRA_TEXT, "Hello TopTier Odds");
+                email.putExtra(Intent.EXTRA_TEXT, "Hello Toptier Odds");
 
                 //need this to prompts email client only
                 email.setType("message/rfc822");
@@ -282,7 +288,7 @@ public class FreeTipsActivity extends AppCompatActivity implements NavigationVie
             try {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "TopTier Odds");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Toptier Odds");
                 intent.putExtra(Intent.EXTRA_TEXT, string);
                 startActivity(Intent.createChooser(intent, "Share with"));
             } catch (ActivityNotFoundException ex) {
@@ -406,6 +412,11 @@ public class FreeTipsActivity extends AppCompatActivity implements NavigationVie
                 if (fragmentFreeTips == null)
                     fragmentFreeTips = new FragmentFreeTips();
                 return fragmentFreeTips;
+            }
+            if (position == 1) {
+                if (fragmentPremium == null)
+                    fragmentPremium = new FragmentPremium();
+                return fragmentPremium;
             }
             return null;
         }

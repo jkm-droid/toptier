@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent email = new Intent(Intent.ACTION_SEND);
                 email.putExtra(Intent.EXTRA_EMAIL, new String[]{ "toptierodds@gmail.com"});
                 email.putExtra(Intent.EXTRA_SUBJECT, "");
-                email.putExtra(Intent.EXTRA_TEXT, "Hello TopTier Odds");
+                email.putExtra(Intent.EXTRA_TEXT, "Hello Toptier Odds");
 
                 //need this to prompts email client only
                 email.setType("message/rfc822");
@@ -316,7 +316,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             registerEditor.putString(Preferences.Register.USERNAME, loginPreferences.getString(Preferences.Login.USERNAME, ""));
             registerEditor.putBoolean(Preferences.Register.REGISTERED, true);
             registerEditor.apply();
-            System.out.println("logout============="+registerPreferences.getString(Preferences.Register.USERNAME,""));
 
             SharedPreferences.Editor loginEditor = loginPreferences.edit();
             loginEditor.clear();

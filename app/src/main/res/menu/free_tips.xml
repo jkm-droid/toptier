@@ -8,7 +8,7 @@
             <item
                 android:id="@+id/subscribe"
                 android:icon="@drawable/vip_fire"
-                android:title="Join VIP for $15" />
+                android:title="Register for FREE tips" />
             <item
                 android:id="@+id/email"
                 android:icon="@drawable/email"

@@ -32,7 +32,7 @@ public class FragmentLatest extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.activity_latest, null);
+        View view = inflater.inflate(R.layout.activity_latest, container, false);
         listView = view.findViewById(R.id.listview);
         ((TextView) view.findViewById(R.id.title_fragment)).setText("UPCOMING MATCHES");
 
@@ -57,15 +57,16 @@ public class FragmentLatest extends Fragment{
     }
     public void setTips(ArrayList<Tip> tips){
         this.tips = tips;
-        if (tips == null) {
-            errorView.setVisibility(View.VISIBLE);
-            errorView.setText("No tips found");
-        }
         if (getContext() == null)
             return;
-        listView.setAdapter(new Adapter(getContext(), tips));
+
         if (tips.size() > 0){
             errorView.setVisibility(View.GONE);
+            listView.setAdapter(new Adapter(getContext(), tips));
+        }else{
+            errorView.setVisibility(View.VISIBLE);
+            errorView.setText("No tips found!!");
+            errorView.setTextColor(this.getResources().getColor(R.color.errorColor));
         }
     }
     public void setOnFragmentRestart(FragmentAllMatches.OnFragmentRestart onFragmentRestart) {
@@ -83,8 +84,6 @@ public class FragmentLatest extends Fragment{
                 v = LayoutInflater.from(getContext()).inflate(R.layout.latest_match, null);
             else v = convertView;
 
-            System.out.println("get View position: "+position);
-
             ((TextView)v.findViewById(R.id.time)).setText(MyHelper.toPostDate(tips.get(position).getMatchTime()));
             ((TextView)v.findViewById(R.id.team1)).setText(tips.get(position).getTeamA());
             ((TextView)v.findViewById(R.id.team2)).setText(tips.get(position).getTeamB());
@@ -92,9 +91,7 @@ public class FragmentLatest extends Fragment{
             ((TextView)v.findViewById(R.id.homeodds)).setText(""+tips.get(position).getHome());
             ((TextView)v.findViewById(R.id.awayodds)).setText(""+tips.get(position).getAway());
 
-            System.out.println("Display: "+tips.get(position).getVipStatus());
             if (tips.get(position).getVipStatus() == 10){
-                System.out.println("VIP tip is 10");
                 ((TextView) v.findViewById(R.id.vip_status)).setText("VIP");
             }
 

@@ -54,7 +54,7 @@ public class FragmentFreeTips extends Fragment {
         title =  view.findViewById(R.id.title);
         //create VIP button and link to login activity
         Button joinVip = new Button(getActivity());
-        joinVip.setText("Join VIP for $15");
+        joinVip.setText("REGISTER FOR FREE");
         joinVip.setBackgroundColor(Color.parseColor("#0E73C2"));
         listView.addFooterView(joinVip);
         joinVip.setOnClickListener(v -> startActivity(new Intent(getActivity(), UserActivity.class)));

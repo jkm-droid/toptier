@@ -32,7 +32,7 @@ public class FragmentProfile extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.profile, null);
+        View view = inflater.inflate(R.layout.profile, container,false);
         SharedPreferences preferences = getActivity().getSharedPreferences(Preferences.Login.NAME, MODE_PRIVATE);
         ((TextView)view.findViewById(R.id.email)).setText(preferences.getString(Preferences.Login.EMAIL, ""));
         ((Switch) view.findViewById(R.id.deactivate)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
