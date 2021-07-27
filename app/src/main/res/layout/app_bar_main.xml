@@ -12,9 +12,10 @@
         android:layout_height= "wrap_content" >
         <androidx.appcompat.widget.Toolbar
             android:id= "@+id/toolbar"
+            app:titleTextColor="#fff"
             android:layout_width= "match_parent"
             android:layout_height= "?attr/actionBarSize"
-            android:background= "@color/colorAppBar"/>
+            android:background= "#0097A7"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
@@ -26,9 +27,13 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_alignParentBottom="true"
+            app:tabSelectedTextColor="@color/black"
+            app:tabIndicatorColor="#fff"
+            app:tabIconTint="#ffff"
+            app:tabTextColor="#fff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAppBar">
+            android:background="#0097A7">
         </com.google.android.material.tabs.TabLayout>
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"

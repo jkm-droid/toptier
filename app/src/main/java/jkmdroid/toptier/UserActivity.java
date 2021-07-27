@@ -84,9 +84,9 @@ public class UserActivity extends AppCompatActivity{
 
                 String error = "";
                 if (password.length() < 5)
-                    error += "\nPassword too short";
+                    error += "\nToo short password";
                 if (!password.equals(confirm))
-                    error +="\nPassword do not match";
+                    error +="\nPasswords do not match";
                 if (!email.contains("@") || !email.contains(".") || email.indexOf('@') > email.lastIndexOf('.'))
                     error +="\nInvalid email";
                 if (username.length() < 5)
@@ -114,7 +114,7 @@ public class UserActivity extends AppCompatActivity{
                         data += URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") + "&";
                         data += URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
 
-                        progressDialog = new ProgressDialog(UserActivity.this,R.style.progressDialogColor);
+                        progressDialog = new ProgressDialog(UserActivity.this);
                         progressDialog.setMessage("Registering...Please wait");
                         progressDialog.setIndeterminate(false);
                         progressDialog.setCancelable(true);
@@ -153,9 +153,9 @@ public class UserActivity extends AppCompatActivity{
 
                 String error = "";
                 if (user.length() < 5)
-                    error += "\nUsername/email invalid";
+                    error += "\nIncorrect username/email";
                 if (password.length() < 5)
-                    error += "\nPassword invalid";
+                    error += "\nIncorrect password";
 
                 if (error.trim().length() > 5)
                     ((TextView)findViewById(R.id.error)).setText(error);
@@ -177,7 +177,7 @@ public class UserActivity extends AppCompatActivity{
                         data += URLEncoder.encode("login_user", "UTF-8") + "=" + URLEncoder.encode("login", "UTF-8") + "&";
                         data += URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
 
-                        progressDialog = new ProgressDialog(UserActivity.this,R.style.progressDialogColor);
+                        progressDialog = new ProgressDialog(UserActivity.this);
                         progressDialog.setMessage("Authenticating...Please wait");
                         progressDialog.setIndeterminate(false);
                         progressDialog.setCancelable(true);

@@ -14,7 +14,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +35,15 @@ public class FragmentLatest extends Fragment{
     ListView listView;
     TextView errorView;
     ImageView imageError;
-    FragmentAllMatches.OnFragmentRestart onFragmentRestart;
+    private OnFragmentRestart onFragmentRestart;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.activity_latest, container, false);
+        View view = inflater.inflate(R.layout.activity_matches, container, false);
         listView = view.findViewById(R.id.listview);
-        ((TextView) view.findViewById(R.id.title_fragment)).setText("UPCOMING MATCHES");
+
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Upcoming Matches");
 
         errorView = view.findViewById(R.id.error);
         imageError = view.findViewById(R.id.image_error);
@@ -49,6 +58,16 @@ public class FragmentLatest extends Fragment{
             errorView.setTextColor(this.getResources().getColor(R.color.errorColor));
         }
 
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdView mAdView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         FrameLayout layout = new FrameLayout(getActivity());
         layout.addView(view);
         if (onFragmentRestart != null)
@@ -60,64 +79,48 @@ public class FragmentLatest extends Fragment{
         if (getContext() == null)
             return;
 
-        if (tips.size() > 0){
+        if (tips != null && tips.size() > 0){
             errorView.setVisibility(View.GONE);
             listView.setAdapter(new Adapter(getContext(), tips));
-        }else{
+        }
+        if(tips == null){
             errorView.setVisibility(View.VISIBLE);
             errorView.setText("No tips found!!");
             errorView.setTextColor(this.getResources().getColor(R.color.errorColor));
         }
     }
-    public void setOnFragmentRestart(FragmentAllMatches.OnFragmentRestart onFragmentRestart) {
+    public void setOnFragmentRestart(OnFragmentRestart onFragmentRestart){
         this.onFragmentRestart = onFragmentRestart;
     }
+
+    interface  OnFragmentRestart{
+        void onTipsReceived();
+    }
+
     class Adapter extends ArrayAdapter{
         public Adapter(@NonNull Context context, @NonNull List objects){
-            super(context, R.layout.latest_match, objects);
+            super(context, R.layout.latest_matches, objects);
         }
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
             View v;
             if (convertView == null)
-                v = LayoutInflater.from(getContext()).inflate(R.layout.latest_match, null);
+                v = LayoutInflater.from(getContext()).inflate(R.layout.latest_matches, null);
             else v = convertView;
 
             ((TextView)v.findViewById(R.id.time)).setText(MyHelper.toPostDate(tips.get(position).getMatchTime()));
             ((TextView)v.findViewById(R.id.team1)).setText(tips.get(position).getTeamA());
             ((TextView)v.findViewById(R.id.team2)).setText(tips.get(position).getTeamB());
-            ((TextView)v.findViewById(R.id.drawodds)).setText(""+tips.get(position).getDraw());
-            ((TextView)v.findViewById(R.id.homeodds)).setText(""+tips.get(position).getHome());
-            ((TextView)v.findViewById(R.id.awayodds)).setText(""+tips.get(position).getAway());
 
             if (tips.get(position).getVipStatus() == 10){
                 ((TextView) v.findViewById(R.id.vip_status)).setText("VIP");
             }
 
             String correct = tips.get(position).getCorrect(), s;
-            s = "Pick: "+correct+" -> ";
-
-            if (correct.equalsIgnoreCase("home")){
-                ((TextView)v.findViewById(R.id.team1)).setTextColor(Color.argb(250,0,165,0));
-                ((TextView)v.findViewById(R.id.homeodds)).setTextColor(Color.argb(250,0,165,0));
-                ((TextView)v.findViewById(R.id.home)).setTextColor(Color.argb(250,0,165,0));
-                s += tips.get(position).getHome();
-            }else if (correct.equalsIgnoreCase("away")){
-                ((TextView)v.findViewById(R.id.team2)).setTextColor(Color.argb(250,0,165,0));
-                ((TextView)v.findViewById(R.id.awayodds)).setTextColor(Color.argb(250,0,165,0));
-                ((TextView)v.findViewById(R.id.away)).setTextColor(Color.argb(250,0,165,0));
-                s += tips.get(position).getAway();
-            }else if(correct.equalsIgnoreCase("draw")){
-                ((TextView)v.findViewById(R.id.vs)).setTextColor(Color.argb(250,0,165,0));
-                ((TextView)v.findViewById(R.id.drawodds)).setTextColor(Color.argb(250,0,165,0));
-                ((TextView)v.findViewById(R.id.draw)).setTextColor(Color.argb(250,0,165,0));
-                s += tips.get(position).getDraw();
-            }else{
-                s = "Pick: "+tips.get(position).getCorrect()+" -> "+tips.get(position).getOther();
-            }
-
+            s = "Pick: "+correct;
             ((TextView) v.findViewById(R.id.correct)).setText(s);
+
             return v;
         }
     }

@@ -17,9 +17,6 @@ public class LauncherScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.launcher_screen);
-        SharedPreferences loginPreferences = getSharedPreferences(Preferences.Login.NAME, MODE_PRIVATE);
-        SharedPreferences registerPreferences = getSharedPreferences(Preferences.Register.NAME, MODE_PRIVATE);
-
 
         int SPLASH_TIME_OUT = 2000;
         new Handler().postDelayed(new Runnable() {
@@ -27,15 +24,9 @@ public class LauncherScreen extends AppCompatActivity {
             public void run() {
                 //moving to another activity
 
-                if (loginPreferences.getString(Preferences.Login.USERNAME,"").length() > 3) {
-                    if (loginPreferences.getBoolean(Preferences.Login.LOGGED, false)) {
-                        startActivity(new Intent(LauncherScreen.this, MainActivity.class));
-                        finish();
-                    }
-                }else{
-                    startActivity(new Intent(LauncherScreen.this, FreeTipsActivity.class));
-                    finish();
-                }
+                startActivity(new Intent(LauncherScreen.this, UserActivity.class));
+                finish();
+
             }
         }, SPLASH_TIME_OUT);
 

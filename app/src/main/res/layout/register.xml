@@ -1,110 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="#fff"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#0097A7"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/layout"
+    <LinearLayout
+        android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/top"
-            android:orientation="vertical"
-            android:layout_marginTop="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical">
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:layout_margin="10dp"
-                android:text="@string/app_name"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_below="@+id/top"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:orientation="vertical"
+            android:gravity="center"
+            android:textColor="#ffff"
+            android:text="@string/app_name"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/username"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/username"
-                    android:hint="@string/username"
-                    android:inputType="textPersonName"
-                    android:background="#fff"
-                    android:textSize="17sp"
-                    android:gravity=""
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/email"
-                    android:hint="@string/email"
-                    android:background="#fff"
-                    android:inputType="textEmailAddress"
-                    android:gravity=""
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_texts"
+            android:gravity="center"
+            android:hint="enter username"
+            android:inputType="textPersonName"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="17sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_texts"
+            android:gravity="center"
+            android:hint="enter email"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
-                <EditText
-                    android:id="@+id/password"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:background="#fff"
-                    android:gravity=""
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_marginBottom="20dp"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/confirm"
-                    android:background="#fff"
-                    android:hint="@string/confirm_password"
-                    android:inputType="textPassword"
-                    android:gravity=""
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
-            <TextView
-                android:id="@+id/error"
-                android:textColor="#f00"
-                android:text="@string/fill_all_fields"
-                android:layout_marginStart="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp" />
-            <Button
-                android:id="@+id/button"
-                android:layout_margin="10dp"
-                android:text="@string/register"
-                android:background="@drawable/blue_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/login"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="@string/have_an_account_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-    </RelativeLayout>
-</FrameLayout>
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_texts"
+            android:gravity="center"
+            android:hint="enter password"
+            android:inputType="textPassword"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+
+        <EditText
+            android:id="@+id/confirm"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_texts"
+            android:gravity="center"
+            android:hint="enter confirm password"
+            android:inputType="textPassword"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+        <TextView
+            android:id="@+id/error"
+            android:textColor="#f00"
+            android:text=""
+            android:layout_marginStart="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/blue_button"
+            android:text="@string/register"
+            android:textColor="#ffff" />
+
+        <TextView
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/have_an_account_login"
+            android:textColor="#fff" />
+    </LinearLayout>
+</LinearLayout>

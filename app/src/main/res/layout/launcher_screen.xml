@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorLists"
+    android:background="#0097A7"
     android:layout_height="match_parent">
 
     <TextView
@@ -11,7 +11,8 @@
         android:gravity="center"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:text="@string/toptier_odds"
+        android:textColor="#fff"
+        android:text="@string/app_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

@@ -29,7 +29,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
-
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -64,8 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawer;
     boolean stopThread = false;
     FragmentLatest fragmentLatest;
-    FragmentHome fragmentHome;
-    FragmentAllMatches fragmentAllMatches;
+    FragmentPast fragmentPast;
     FragmentProfile fragmentProfile;
     private ArrayList<Tip> latestTips, allMacthesTips;
     boolean requestSuccessful = false;
@@ -91,8 +89,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     void init(){
         ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setSubtitle("Guaranteed Win");
 
         Bundle extras = getIntent().getExtras();
         if (extras != null)
@@ -107,14 +103,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
 
-        tabLayout.addTab(tabLayout.newTab().setText(""));
-        tabLayout.getTabAt(0).setIcon(R.drawable.home);
-        tabLayout.addTab(tabLayout.newTab().setText(""));
-        tabLayout.getTabAt(1).setIcon(R.drawable.latest);
-        tabLayout.addTab(tabLayout.newTab().setText(""));
-        tabLayout.getTabAt(2).setIcon(R.drawable.sports_soccer);
-        tabLayout.addTab(tabLayout.newTab().setText(""));
-        tabLayout.getTabAt(3).setIcon(R.drawable.profile);
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.sports_soccer));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.vip_fire));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 
@@ -127,6 +118,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onTabSelected(TabLayout.Tab tab){
                 viewPager.setCurrentItem(tab.getPosition());
+                switch (tab.getPosition()){
+                    case 0:
+                        getSupportActionBar().setTitle("Upcoming Matches");
+                        break;
+                    case 1:
+                        getSupportActionBar().setTitle("Past Matches");
+                        break;
+                    case 2:
+                        getSupportActionBar().setTitle("My Profile");
+                        break;
+                    default:
+                        break;
+                }
             }
 
             @Override
@@ -292,7 +296,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //method to logout the user
     private void logout_user() {
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this,R.style.progressDialogColor);
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         String titleText = "Confirm Exit!";
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.RED);
         SpannableStringBuilder ssBuilder = new SpannableStringBuilder(titleText);
@@ -418,41 +422,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 url = "https://toptier.mblog.co.ke/tips/get_tips.php?" + data;
                 postJson1 = new PostJson(MainActivity.this, url);
-                postJson1.setOnSuccessListener(new PostJson.OnSuccessListener() {
-                    @Override
-                    public void onSuccess(JSONObject response) throws JSONException {
-                        allMacthesTips = extractTips(response);
+                postJson1.setOnSuccessListener(response -> {
+                    allMacthesTips = extractTips(response);
 
-                        requestSuccessful = true;
+                    requestSuccessful = true;
 
-                        if (fragmentAllMatches == null){
-                            fragmentAllMatches = new FragmentAllMatches();
-                            fragmentAllMatches.setOnFragmentRestart(() -> {
-                                if (allMacthesTips != null)
-                                    fragmentAllMatches.setTips(allMacthesTips);
-                                else fragmentAllMatches.setTips(new ArrayList<>());
-                            });
-                        }
-                        fragmentAllMatches.setTips(allMacthesTips);
+                    if (fragmentPast == null){
+                        fragmentPast = new FragmentPast();
+                        fragmentPast.setOnFragmentRestart(() -> {
+                            if (allMacthesTips != null)
+                                fragmentPast.setTips(allMacthesTips);
+                            else fragmentPast.setTips(new ArrayList<>());
+                        });
                     }
+
+                    fragmentPast.setTips(allMacthesTips);
                 });
                 postJson1.get();
-                url = "https://toptier.mblog.co.ke/tips/home_details.php?get_details";
-                postJson2 = new PostJson(MainActivity.this, url);
-                postJson2.setOnSuccessListener(new PostJson.OnSuccessListener() {
-                    @Override
-                    public void onSuccess(JSONObject response) throws JSONException {
-                        if (fragmentHome == null)
-                            fragmentHome = new FragmentHome();
-                        fragmentHome.setData(
-                                response.getInt("upcoming_matches"),
-                                response.getInt("all_matches"),
-                                response.getInt("correct_tips"),
-                                response.getInt("all_members")
-                        );
-                    }
-                });
-                postJson2.get();
             }
         };
         Thread thread = new Thread(){
@@ -465,7 +451,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 try {
                     if (requestSuccessful)
-                        sleep(120000);
+                        sleep(180000);
                     sleep(10000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -491,13 +477,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         public Fragment getItem(int position){
             switch (position){
                 case 0:
-                    if (fragmentHome == null)
-                        fragmentHome = new FragmentHome();
-                    return fragmentHome;
-                case 1:
                     if (fragmentLatest == null){
                         fragmentLatest = new FragmentLatest();
-                        fragmentLatest.setOnFragmentRestart(() -> {
+                        fragmentLatest.setOnFragmentRestart(()->{
                             if (latestTips != null)
                                 fragmentLatest.setTips(latestTips);
                             else fragmentLatest.setTips(new ArrayList<>());
@@ -505,20 +487,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                     if (latestTips != null)
                         fragmentLatest.setTips(latestTips);
+
                     return fragmentLatest;
-                case 2:
-                    if (fragmentAllMatches == null){
-                        fragmentAllMatches = new FragmentAllMatches();
-                        fragmentAllMatches.setOnFragmentRestart(() -> {
+                case 1:
+                    if (fragmentPast == null){
+                        fragmentPast = new FragmentPast();
+                        fragmentPast.setOnFragmentRestart(() -> {
                             if (allMacthesTips != null)
-                                fragmentAllMatches.setTips(allMacthesTips);
-                            else fragmentAllMatches.setTips(new ArrayList<>());
+                                fragmentPast.setTips(allMacthesTips);
+                            else fragmentPast.setTips(new ArrayList<>());
                         });
                     }
                     if (allMacthesTips != null)
-                        fragmentAllMatches.setTips(allMacthesTips);
-                    return fragmentAllMatches;
-                case 3:
+                        fragmentPast.setTips(allMacthesTips);
+
+                    return fragmentPast;
+                case 2:
                     if (fragmentProfile == null)
                         fragmentProfile = new FragmentProfile();
                     return fragmentProfile;

@@ -19,7 +19,7 @@
                 android:title="@string/telegram" />
         </menu>
     </item>
-    <item android:title="@string/top_tier">
+    <item android:title="@string/app_name">
         <menu>
             <item
                 android:id="@+id/privacy"
@@ -37,12 +37,14 @@
             <item
                 android:id="@+id/developers"
                 android:icon="@drawable/developers"
-                android:title="@string/developed_by_j_p" />
+                android:title="@string/oak_teak_technologies" />
         </menu>
     </item>
 
     <group android:checkableBehavior="single">
         <item android:id="@+id/logout"
-            android:title="@string/logout"/>
+            android:title="@string/logout"
+            android:icon="@drawable/logout_arrow"
+           />
     </group>
 </menu>

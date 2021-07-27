@@ -19,7 +19,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -35,78 +42,26 @@ public class FragmentProfile extends Fragment {
         View view = inflater.inflate(R.layout.profile, container,false);
         SharedPreferences preferences = getActivity().getSharedPreferences(Preferences.Login.NAME, MODE_PRIVATE);
         ((TextView)view.findViewById(R.id.email)).setText(preferences.getString(Preferences.Login.EMAIL, ""));
-        ((Switch) view.findViewById(R.id.deactivate)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("My Profile");
+
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    progressDialog = new ProgressDialog(getActivity(),R.style.progressDialogColor);
-                    progressDialog.setMessage("Deactivating... Please wait");
-                    progressDialog.setIndeterminate(false);
-                    progressDialog.setCancelable(true);
-                    if (progressDialog != null)
-                        progressDialog.show();
-                    String email = preferences.getString(Preferences.Login.EMAIL, "");
-
-                    String d = "";
-                    try {
-                        d += URLEncoder.encode("deactivate_account", "UTF-8") + "=" + URLEncoder.encode("c", "UTF-8") + "&";
-                        d += URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") + "&";
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    final String data = d;
-                    final String link = "https://toptier.mblog.co.ke/users/deactivate_account.php";
-                    @SuppressLint("HandlerLeak") Handler handler = new Handler(){
-                        @SuppressLint("HandlerLeak")
-                        @Override
-                        public void handleMessage(@NonNull Message msg) {
-                            super.handleMessage(msg);
-                            while (progressDialog.isShowing())
-                                progressDialog.dismiss();
-                            if(((String)msg.obj).equalsIgnoreCase("Deactivated successfully")){
-                                Toast.makeText(getActivity(), "Deactivated", Toast.LENGTH_LONG).show();
-                                SharedPreferences preferences = getActivity().getSharedPreferences(Preferences.Login.NAME, MODE_PRIVATE);
-                                SharedPreferences.Editor editor = preferences.edit();
-                                editor.clear();
-                                editor.apply();
-                                startActivity(new Intent(getActivity(), UserActivity.class));
-                                getActivity().finish();
-                            }else{
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                builder.setMessage(((String)msg.obj))
-                                        .setTitle("Error Occurred")
-                                        .setCancelable(false)
-                                        .setPositiveButton("OK", null)
-                                        .show();
-                            }
-                        }
-                    };
-                    Thread thread = new Thread(){
-                        @Override
-                        public void run() {
-                            try {
-                                String response = MyHelper.connectOnline(link, data);
-                                Message message = new Message();
-                                message.arg1 = 1;
-                                message.obj = response;
-                                handler.sendMessage(message);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    };
-                    thread.start();
-
-                }
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
+
+        AdView mAdView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         if (preferences.getInt(Preferences.Login.STATUS, 5) == 5){
             ((TextView)view.findViewById(R.id.status)).setText("Normal");
             view.findViewById(R.id.join_vip).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (MyHelper.isOnline(getActivity()))
-                        startActivity(new Intent(getActivity(), SubscribeActivity.class));
+                        startActivity(new Intent(getActivity(), Subscription.class));
                     else
                         Toast.makeText(getActivity(), "Enable internet connection", Toast.LENGTH_LONG).show();
                 }

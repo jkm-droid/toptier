@@ -4,31 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="@color/backgroundApp"
+    android:background="#318A92"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:id="@+id/bottom"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_marginBottom="5dp"
-        android:layout_height="wrap_content">
 
-        <Switch
-            android:id="@+id/deactivate"
-            android:visibility="gone"
-            android:layout_margin="10dp"
-            android:text="@string/deactivate_account"
-            android:textColor="@color/blue_for_buttons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
-    </LinearLayout>
     <LinearLayout
-        android:layout_above="@id/bottom"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <ImageView
             android:background="@drawable/round"
             android:src="@mipmap/profile_round"
@@ -44,52 +26,46 @@
             android:textStyle="bold"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:textColor="@color/blue_for_buttons"
+            android:textColor="@color/black"
             android:layout_height="wrap_content"/>
         <TextView
-            android:layout_width="wrap_content"
-            android:text="@string/user_status"
-            android:layout_margin="10dp"
-            android:textColor="#666"
-            android:layout_height="wrap_content"/>
-        <LinearLayout
-            android:layout_marginStart="30dp"
+            android:id="@+id/status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp">
-            <ImageView
-                android:layout_marginEnd="3dp"
-                android:src="@drawable/user_status_check"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="3dp" />
+            android:gravity="center"
+            android:text="@string/normal"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/status"
-                android:layout_width="62dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/normal"
-                android:textColor="@color/blue_for_buttons"
-                android:textStyle="bold" />
-        </LinearLayout>
+        <ImageView
+            android:layout_marginEnd="3dp"
+            android:src="@drawable/user_status_check"
+            android:layout_width="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="30dp"
+            android:layout_marginRight="3dp" />
+
+
         <LinearLayout
             android:id="@+id/vip"
             android:orientation="vertical"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/profile_message"
-                android:text="@string/become_a_vip_member_for_only_kshs_1500_to_enjoy_privileged_services"
+                android:text="@string/vip_message"
                 android:gravity="center"
                 android:textSize="17sp"
+                android:textStyle="bold"
                 android:layout_margin="15dp"
-                android:textColor="#060"
+                android:textColor="#F57C00"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/join_vip"
+                android:textColor="#fff"
                 android:background="@drawable/blue_button"
                 android:text="@string/join_vip_for_kshs_1500"
                 android:paddingRight="25dp"
@@ -97,6 +73,16 @@
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
         </LinearLayout>
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            ads:adSize="LARGE_BANNER"
+            ads:adUnitId="ca-app-pub-2013226613512577/6409041542">
+        </com.google.android.gms.ads.AdView>
     </LinearLayout>
+
 </RelativeLayout>

@@ -6,7 +6,7 @@
     android:id= "@+id/drawer_layout"
     android:layout_width= "match_parent"
     android:layout_height= "match_parent"
-    android:background="@color/colorAppBar"
+    android:backgroundTint="#0097A7"
     android:fitsSystemWindows= "true"
     tools:openDrawer= "start">
     <include
@@ -15,10 +15,12 @@
         android:layout_height= "match_parent"/>
     <com.google.android.material.navigation.NavigationView
         android:id= "@+id/nav_view"
+        android:backgroundTint="#0097A7"
+        app:itemTextColor="#fff"
         android:layout_width= "wrap_content"
         android:layout_height= "match_parent"
         android:layout_gravity= "start"
-        app:itemIconTint="@color/blue_for_buttons"
+        app:itemIconTint="#FFA000"
         android:fitsSystemWindows= "true"
         app:headerLayout= "@layout/nav_header_main"
         app:menu= "@menu/activity_main_drawer" />
