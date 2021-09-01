@@ -82,8 +82,7 @@ public class FragmentLatest extends Fragment{
         if (tips != null && tips.size() > 0){
             errorView.setVisibility(View.GONE);
             listView.setAdapter(new Adapter(getContext(), tips));
-        }
-        if(tips == null){
+        }else{
             errorView.setVisibility(View.VISIBLE);
             errorView.setText("No tips found!!");
             errorView.setTextColor(this.getResources().getColor(R.color.errorColor));

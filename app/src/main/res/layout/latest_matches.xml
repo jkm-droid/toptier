@@ -8,12 +8,13 @@
     android:layout_height="wrap_content">
     <!--    for space-->
     <TextView
-        android:background="#263535"
+        android:background="#318A92"
         android:layout_width="match_parent"
-        android:layout_height="6dp"/>
+        android:layout_height="3dp"/>
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="4dp"
         android:backgroundTint="#96BEC2"
+        android:background="#96BEC2"
         android:layout_marginStart="2dp"
         android:layout_marginEnd="2dp"
         android:layout_width="match_parent"

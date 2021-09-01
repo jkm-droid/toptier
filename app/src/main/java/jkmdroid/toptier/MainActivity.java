@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent email = new Intent(Intent.ACTION_SEND);
                 email.putExtra(Intent.EXTRA_EMAIL, new String[]{ "toptierodds@gmail.com"});
                 email.putExtra(Intent.EXTRA_SUBJECT, "");
-                email.putExtra(Intent.EXTRA_TEXT, "Hello Toptier Odds");
+                email.putExtra(Intent.EXTRA_TEXT, "Hello Toptier Football Odds");
 
                 //need this to prompts email client only
                 email.setType("message/rfc822");
@@ -284,8 +284,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             try {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "TopTier Odds");
-                intent.putExtra(Intent.EXTRA_TEXT, string);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "TopTier Football Odds");
+                intent.putExtra(Intent.EXTRA_TEXT, "Get Toptier Football Odds by clicking this link "+string);
                 startActivity(Intent.createChooser(intent, "Share with"));
             } catch (ActivityNotFoundException ex) {
                 Toast.makeText(MainActivity.this, "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();

@@ -8,7 +8,7 @@
 
     <!--    for space-->
     <TextView
-        android:background="#263535"
+        android:background="#318A92"
         android:layout_width="match_parent"
         android:layout_height="2dp"/>
 

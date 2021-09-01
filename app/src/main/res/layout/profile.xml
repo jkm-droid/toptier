@@ -60,7 +60,7 @@
                 android:textSize="17sp"
                 android:textStyle="bold"
                 android:layout_margin="15dp"
-                android:textColor="#F57C00"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <androidx.appcompat.widget.AppCompatButton
